@@ -30,18 +30,20 @@ bot.plugins = new Discord.Collection
 
 const mainConfig = require('../../mainconfig.json')
 
-// load plugins
-
-const plugins = fs.readdirSync('./plugins').filter(file => file.endsWith(`bot.js`));
-for(const file of plugins){
-    const plugin = require(`../${file}`);
-
-    bot.plugins.set(plugin.name, plugin)
-}
-
 module.exports = {
   run: function run(){
-    bot.plugins.get(`template`).func(bot)
+
+    // load plugins
+
+    const plugins = fs.readdirSync('./plugins').filter(file => file.endsWith(`bot.js`));
+    for(const file of plugins){
+      const plugin = require(`../${file}`);
+
+      bot.plugins.set(plugin.name, plugin)
+
+      bot.plugins.get(`${plugin.name}`).func(bot)
+    }
+
     bot.login(mainConfig.token)
   }
 }
