@@ -30,18 +30,20 @@ client.plugins = new Discord.Collection
 
 const mainConfig = require('../../mainconfig.json')
 
-// load plugins
-
-const plugins = fs.readdirSync('./plugins').filter(file => file.endsWith(`client.js`));
-for(const file of plugins){
-    const plugin = require(`../${file}`);
-
-    client.plugins.set(plugin.name, plugin)
-}
-
 module.exports = {
   run: function run(){
-    client.plugins.get(`template`).func(client)
+
+    // load plugins
+
+    const plugins = fs.readdirSync('./plugins').filter(file => file.endsWith(`client.js`));
+    for(const file of plugins){
+      const plugin = require(`../${file}`);
+
+      client.plugins.set(plugin.name, plugin)
+
+      client.plugins.get(`${plugin.name}`).func(client)
+    }
+
     client.login(mainConfig.token)
   }
 }
