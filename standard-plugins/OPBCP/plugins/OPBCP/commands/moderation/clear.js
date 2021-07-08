@@ -1,5 +1,5 @@
 
-const logger = require('../../../../../../pluginbot-main/pluginbot/plugins/logger');
+const logger = require('../../../logger');
 const config = require('../../../../configs/OPBCP/mod/clear.json')
 
 
